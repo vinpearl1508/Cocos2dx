@@ -146,8 +146,8 @@ bool HelloWorld::init()
 		sprite4->setPosition(Vec2(origin.x + visibleSize.width / 2 + i * sprite4->getContentSize().width, origin.y + visibleSize.height / 6 * 2 + sprite4->getContentSize().height / 2));
 		this->addChild(sprite4);
 	}
-	
-    return true;
+
+	return true;
 }
 
 

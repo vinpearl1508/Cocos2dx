@@ -73,5 +73,68 @@ bool MainScene::init()
 		this->addChild(sprite);
 	}
 
+	//auto beeMC = Sprite::create();
+	//beeMC->setPosition(origin.x + visibleSize.width / 6 , origin.y + visibleSize.height / 3 * 2);
+	//addChild(beeMC);
+	//Vector<SpriteFrame*> animFrames;
+	///*animFrames.pushBack(SpriteFrame::create("bee1.png", Rect(0, 0, 150, 150)));
+	//animFrames.pushBack(SpriteFrame::create("bee2.png", Rect(0, 0, 150, 150)));
+	//animFrames.pushBack(SpriteFrame::create("bee3.png", Rect(0, 0, 150, 150)));*/
+	//for (int i = 1; i <= 3; i++)
+	//{
+	//	//std::string std = "bee"+std::to_string(i) + ".png";
+	//	animFrames.pushBack(SpriteFrame::create("bee" + std::to_string(i) + ".png", Rect(0, 0, 150, 150)));
+	//}
+	//auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+	//auto animate = Animate::create(animation);
+	//beeMC->runAction(RepeatForever::create(animate));
+
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("walker.plist");
+	//sprite
+	auto frames = getAnimation("walker (%d).png", 7);
+	auto sprite = Sprite::createWithSpriteFrame(frames.front());
+	addChild(sprite);
+	sprite->setAnchorPoint(Vec2(0,0));
+	sprite->setPosition(Vec2(visibleSize.width/10, visibleSize.height/10));
+	sprite->setScale(0.15);
+
+	auto animation = Animation::createWithSpriteFrames(frames, 1.0f / 8);
+	sprite->runAction(RepeatForever::create(Animate::create(animation)));
+	
+	auto movement = MoveTo::create(10, Vec2(visibleSize.width / 2, visibleSize.height / 10));
+	auto resetPosition = MoveTo::create(0, Vec2(visibleSize.width / 10, visibleSize.height / 10));
+	auto sequence = Sequence::create(movement, resetPosition, NULL);
+	sprite->runAction(RepeatForever::create(sequence));
+
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("walkers.plist");
+	//sprite
+	auto frames1 = getAnimation("walkers (%d).png", 14);
+	auto sprite1 = Sprite::createWithSpriteFrame(frames1.front());
+	addChild(sprite1);
+	sprite1->setAnchorPoint(Vec2(0, 0));
+	sprite1->setPosition(Vec2(visibleSize.width / 10 * 9, visibleSize.height / 10));
+	sprite1->setScale(0.15);
+
+	auto animation1 = Animation::createWithSpriteFrames(frames1, 1.0f / 8);
+	sprite1->runAction(RepeatForever::create(Animate::create(animation1)));
+
+	auto movement1 = MoveTo::create(10, Vec2(visibleSize.width / 2, visibleSize.height / 10));
+	auto resetPosition1 = MoveTo::create(0, Vec2(visibleSize.width / 10 * 9, visibleSize.height / 10));
+	auto sequence1 = Sequence::create(movement1, resetPosition1, NULL);
+	sprite1->runAction(RepeatForever::create(sequence1));
+
 	return true;
+}
+
+cocos2d::Vector<cocos2d::SpriteFrame*> MainScene::getAnimation(const char *format, int count)
+{
+	auto spritecache = SpriteFrameCache::getInstance();
+	cocos2d::Vector<cocos2d::SpriteFrame*> animFrames;
+	char str[100];
+	for (int i = 1; i <= count; i++)
+	{
+		sprintf(str, format, i);
+		animFrames.pushBack(spritecache->getSpriteFrameByName(str));
+	}
+	return animFrames;
 }
