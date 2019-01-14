@@ -58,12 +58,12 @@ bool HelloWorld::init()
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-	auto startItem = MenuItemFont::create("Start Game", CC_CALLBACK_1(HelloWorld::menuStartCallBack, this));
-	startItem->setFontNameObj("arial");
-	startItem->setFontSizeObj(28);
-	startItem->setColor(Color3B(0,255,255)); 
-	startItem->setPosition(Vec2(origin.x + visibleSize.width /2, origin.y + visibleSize.height / 2 + startItem->getContentSize().height));
-
+	//auto startItem = MenuItemFont::create("Start Game", CC_CALLBACK_1(HelloWorld::menuStartCallBack, this));
+	auto startLabel = Label::create("Start Game", "fonts/Marker Felt.ttf", 32);
+	startLabel->setColor(Color3B(0, 255, 255));
+	auto startItem = MenuItemLabel::create(startLabel, CC_CALLBACK_1(HelloWorld::menuStartCallBack, this));
+	startItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + startLabel->getContentSize().height));
+	
 	auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",

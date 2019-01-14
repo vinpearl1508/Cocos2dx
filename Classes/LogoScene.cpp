@@ -32,11 +32,13 @@ bool LogoScene::init()
 	loadingBarGB->setColor(Color3B(0, 0, 0));
 	loadingBarGB->setPosition(Vec2(screenSize.width / 2, loadingBarGB->getContentSize().height));
 	addChild(loadingBarGB);
+	
 	static auto loadingbar = ui::LoadingBar::create("loadingbar.png");
 	loadingbar->setPercent(0);
 	loadingbar->setDirection(ui::LoadingBar::Direction::LEFT);
 	loadingbar->setPosition(loadingBarGB->getPosition());
 	addChild(loadingbar);
+	
 	//update Loading Bar
 	auto updateLoadingBar = CallFunc::create([]() {
 		if (loadingbar->getPercent() < 100)
@@ -47,12 +49,13 @@ bool LogoScene::init()
 	auto sequenceRunUpdateLoadingBar =
 		Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.1f));
 	auto repeat = Repeat::create(sequenceRunUpdateLoadingBar, 100);
-	loadingbar->runAction(repeat);
+	auto sequence1 = Sequence::create(DelayTime::create(2), repeat, nullptr);
+	loadingbar->runAction(sequence1);
 
 	auto gotoNext = CallFunc::create([]() {
 		Director::getInstance()->replaceScene(HelloWorld::createScene());
 	});
-	auto sequence = Sequence::create(DelayTime::create(10), gotoNext, nullptr);
-	runAction(sequence);
+	auto sequence2 = Sequence::create(DelayTime::create(12), gotoNext, nullptr);
+	runAction(sequence2);
 	return true;
 }
