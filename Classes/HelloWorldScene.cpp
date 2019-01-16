@@ -23,7 +23,10 @@ bool HelloWorld::init()
 
     /////////////////////////////
     // 2. add your codes below...
-
+	auto background = Sprite::create("background.png");
+	background->setContentSize(visibleSize);
+	background->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+	this->addChild(background);
     
     return true;
 }
